@@ -1,14 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/context/AuthContext';
+import { Organization } from '@/lib/db/types';
 import { Activity, User, Mail, Lock, Phone, ArrowRight, AlertCircle } from 'lucide-react';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { organizations, isLoading: isAuthLoading, login } = useAuth();
+  const { login } = useAuth();
+  const [organizations, setOrganizations] = useState<Organization[]>([]);
+  const [isLoadingOrganizations, setIsLoadingOrganizations] = useState(true);
+  const [organizationLoadError, setOrganizationLoadError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,9 +23,40 @@ export default function RegisterPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const organizationId = organizations.some((organization) => organization.id === formData.organizationId)
+  const activeOrganizations = organizations.filter((organization) => organization.activeStatus);
+  const organizationId = activeOrganizations.some((organization) => organization.id === formData.organizationId)
     ? formData.organizationId
-    : organizations[0]?.id || '';
+    : activeOrganizations[0]?.id || '';
+
+  const requestOrganizations = async () => {
+    const response = await fetch('/api/organizations', { cache: 'no-store' });
+    const data = await response.json();
+    if (!response.ok || !Array.isArray(data.organizations)) {
+      throw new Error(data.error || 'Could not load the organization list.');
+    }
+    return data.organizations as Organization[];
+  };
+
+  useEffect(() => {
+    let active = true;
+    requestOrganizations()
+      .then((available) => { if (active) setOrganizations(available); })
+      .catch(() => { if (active) setOrganizationLoadError('We could not load healthcare organizations. Check your connection and retry.'); })
+      .finally(() => { if (active) setIsLoadingOrganizations(false); });
+    return () => { active = false; };
+  }, []);
+
+  const loadOrganizations = async () => {
+    setIsLoadingOrganizations(true);
+    setOrganizationLoadError('');
+    try {
+      setOrganizations(await requestOrganizations());
+    } catch {
+      setOrganizationLoadError('We could not load healthcare organizations. Check your connection and retry.');
+    } finally {
+      setIsLoadingOrganizations(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -153,27 +188,34 @@ export default function RegisterPage() {
                 </label>
                 <select
                   required
-                  disabled={isAuthLoading || organizations.length === 0}
+                  disabled={isLoadingOrganizations || activeOrganizations.length === 0}
                   value={organizationId}
                   onChange={(e) => setFormData({ ...formData, organizationId: e.target.value })}
                   className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm focus:border-indigo-600 focus:outline-hidden focus:ring-2 focus:ring-indigo-500/20 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
                 >
-                  {organizations.map((org) => (
+                  {activeOrganizations.map((org) => (
                     <option key={org.id} value={org.id}>
                       {org.name}
                     </option>
                   ))}
                 </select>
-                {!isAuthLoading && organizations.length === 0 && (
+                {isLoadingOrganizations && <p role="status" className="mt-2 text-xs text-slate-500">Loading available organizations…</p>}
+                {!isLoadingOrganizations && organizationLoadError && (
+                  <div role="alert" className="mt-2 flex items-center justify-between gap-3 text-xs text-red-700 dark:text-red-300">
+                    <span>{organizationLoadError}</span>
+                    <button type="button" onClick={() => void loadOrganizations()} className="shrink-0 font-bold underline">Retry</button>
+                  </div>
+                )}
+                {!isLoadingOrganizations && !organizationLoadError && activeOrganizations.length === 0 && (
                   <p className="mt-2 text-xs text-amber-700 dark:text-amber-300">
-                    No active organization is available yet. Contact your platform administrator.
+                    No active organization is available yet. Ask your platform administrator to add one.
                   </p>
                 )}
             </div>
 
             <button
               type="submit"
-              disabled={loading || isAuthLoading || organizations.length === 0}
+              disabled={loading || isLoadingOrganizations || activeOrganizations.length === 0}
               className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-700 px-4 py-3 text-sm font-bold text-white shadow-md shadow-indigo-700/20 transition-all hover:bg-indigo-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {loading ? 'Creating Account...' : 'Complete Registration'}

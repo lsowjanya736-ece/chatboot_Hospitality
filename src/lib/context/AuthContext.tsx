@@ -25,25 +25,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     async function initAuth() {
-      try {
-        setSelectedOrganizationId(localStorage.getItem('healthcare_selected_org'));
-        const [sessionRes, orgRes] = await Promise.all([
-          fetch('/api/auth/me'),
-          fetch('/api/organizations'),
-        ]);
-        if (sessionRes.ok) {
-          const data = await sessionRes.json();
-          setUser(data.user);
+      setSelectedOrganizationId(localStorage.getItem('healthcare_selected_org'));
+      const [sessionResult, organizationResult] = await Promise.allSettled([
+        fetch('/api/auth/me'),
+        fetch('/api/organizations'),
+      ]);
+
+      if (sessionResult.status === 'fulfilled') {
+        try {
+          if (sessionResult.value.ok) {
+            const data = await sessionResult.value.json();
+            setUser(data.user);
+          }
+        } catch (error) {
+          console.error('Session initialization failed:', error);
         }
-        if (orgRes.ok) {
-          const data = await orgRes.json();
-          setOrganizations(data.organizations || []);
-        }
-      } catch (error) {
-        console.error('Auth initialization error:', error);
-      } finally {
-        setIsLoading(false);
+      } else {
+        console.error('Session request failed:', sessionResult.reason);
       }
+
+      if (organizationResult.status === 'fulfilled') {
+        try {
+          if (organizationResult.value.ok) {
+            const data = await organizationResult.value.json();
+            setOrganizations(data.organizations || []);
+          }
+        } catch (error) {
+          console.error('Organization initialization failed:', error);
+        }
+      } else {
+        console.error('Organization request failed:', organizationResult.reason);
+      }
+      setIsLoading(false);
     }
 
     void initAuth();
