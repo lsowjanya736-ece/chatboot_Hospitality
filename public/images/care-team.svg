@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" fill="none">
+  <defs>
+    <linearGradient id="room" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#E3F5F3"/><stop offset=".55" stop-color="#D4E8F3"/><stop offset="1" stop-color="#B6D2E4"/></linearGradient>
+    <linearGradient id="window" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#F9FFFF"/><stop offset="1" stop-color="#BDE2E7"/></linearGradient>
+    <linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FBFFFF"/><stop offset="1" stop-color="#B9D6E1"/></linearGradient>
+    <linearGradient id="scrub" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2C8F98"/><stop offset="1" stop-color="#176679"/></linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#DDA985"/><stop offset="1" stop-color="#A96E57"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur stdDeviation="16"/></filter>
+  </defs>
+  <rect width="1200" height="700" fill="url(#room)"/>
+  <circle cx="1000" cy="60" r="245" fill="#FFF" opacity=".22"/>
+  <rect x="685" y="62" width="430" height="330" rx="22" fill="#BDD8DF" opacity=".7"/>
+  <rect x="706" y="82" width="389" height="289" rx="13" fill="url(#window)"/>
+  <path d="M706 246h389M901 82v289" stroke="#FFF" stroke-width="12" opacity=".82"/>
+  <path d="M734 341c44-92 97-90 137-15 46-103 112-111 197-2v47H734z" fill="#87BCC2" opacity=".42"/>
+  <path d="M790 370c20-56 53-85 97-87m43 93c25-69 70-104 132-104" stroke="#6A9F9F" stroke-width="8" stroke-linecap="round" opacity=".36"/>
+  <rect x="70" y="80" width="270" height="14" rx="7" fill="#FFF" opacity=".44"/>
+  <rect x="70" y="109" width="174" height="9" rx="4.5" fill="#FFF" opacity=".34"/>
+  <ellipse cx="608" cy="638" rx="458" ry="37" fill="#31596A" opacity=".2" filter="url(#shadow)"/>
+  <!-- clinician on the left -->
+  <path d="M184 651c6-138 37-231 118-254 79 22 111 112 118 254z" fill="url(#scrub)"/>
+  <path d="M262 400c-7 29 4 47 40 62 37-15 49-34 40-63z" fill="url(#skin)"/>
+  <ellipse cx="302" cy="316" rx="76" ry="94" fill="url(#skin)"/>
+  <path d="M227 315c-10-100 39-138 105-128 44 7 68 39 57 86-24-15-37-36-46-61-29 39-68 48-112 45z" fill="#283D4C"/>
+  <path d="M237 324c-6-10-18-8-21 4-3 14 6 29 22 32m132-37c7-10 19-8 21 4 3 14-6 29-22 32" fill="#D49A78"/>
+  <path d="M273 319h5m52 0h5" stroke="#3D302C" stroke-width="7" stroke-linecap="round"/>
+  <path d="M284 362c12 9 27 9 39 0" stroke="#8A5146" stroke-width="5" stroke-linecap="round"/>
+  <path d="M256 421l48 45 48-46m-48 44v155" stroke="#C1E0E2" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="350" y="493" width="34" height="45" rx="6" fill="#F8FFFF" opacity=".95"/>
+  <path d="M359 504h16m-16 8h16" stroke="#68A5AA" stroke-width="3" stroke-linecap="round"/>
+  <!-- clinician in the middle -->
+  <path d="M414 657c6-149 43-249 128-273 87 24 119 124 126 273z" fill="url(#coat)"/>
+  <path d="M502 400c-8 29 3 47 40 63 37-16 49-34 41-64z" fill="url(#skin)"/>
+  <ellipse cx="544" cy="315" rx="78" ry="96" fill="#E6B99C"/>
+  <path d="M468 322c-15-68 7-132 81-137 65-5 91 36 72 119-15-11-26-33-31-58-33 30-71 43-122 38z" fill="#514143"/>
+  <path d="M480 324c-7-10-18-8-21 5-2 14 7 28 22 31m131-36c7-10 18-8 21 5 3 14-6 28-21 31" fill="#DFAF91"/>
+  <path d="M514 319h5m52 0h5" stroke="#493B3B" stroke-width="7" stroke-linecap="round"/>
+  <path d="M524 361c13 9 28 9 41 0" stroke="#A5655B" stroke-width="5" stroke-linecap="round"/>
+  <path d="M486 426l58 59 59-60m-59 60v166" stroke="#68AAB0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M544 485l-31 31 31 72 31-72z" fill="#4F8D95"/>
+  <rect x="591" y="505" width="37" height="46" rx="7" fill="#FFF" stroke="#A6C9CF" stroke-width="3"/>
+  <path d="M600 518h19m-19 9h19" stroke="#65A1A9" stroke-width="3" stroke-linecap="round"/>
+  <!-- clinician on the right -->
+  <path d="M670 653c6-131 35-218 110-238 75 20 104 107 111 238z" fill="#637DA4"/>
+  <path d="M744 423c-7 26 3 42 36 56 33-14 44-30 36-57z" fill="#8E5948"/>
+  <ellipse cx="780" cy="349" rx="69" ry="84" fill="#A96E57"/>
+  <path d="M712 350c-6-71 21-109 77-111 49-1 71 31 66 86-20-13-31-30-37-52-24 29-59 42-104 39z" fill="#222F3D"/>
+  <path d="M716 354c-6-9-16-7-19 4-2 12 6 25 19 28m128-32c6-9 16-7 19 4 2 12-6 25-19 28" fill="#995F4C"/>
+  <path d="M754 350h4m46 0h4" stroke="#2B282B" stroke-width="6" stroke-linecap="round"/>
+  <path d="M763 388c11 8 24 8 35 0" stroke="#75463F" stroke-width="4" stroke-linecap="round"/>
+  <path d="M731 445l49 49 48-49m-48 48v139" stroke="#D5E1EF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- foreground desk and tablet -->
+  <path d="M70 594c160-33 320-39 490-13 153 24 296 27 570-2v121H70z" fill="#D4E5E7" opacity=".92"/>
+  <rect x="881" y="492" width="171" height="118" rx="13" transform="rotate(-5 881 492)" fill="#354E65"/>
+  <rect x="891" y="503" width="150" height="96" rx="7" transform="rotate(-5 891 503)" fill="#EDF8F8"/>
+  <path d="M911 527l12 12 25-28" stroke="#3CA5A1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="957" y="519" width="62" height="7" rx="3.5" fill="#B7CFD7"/>
+  <rect x="911" y="555" width="107" height="6" rx="3" fill="#D0E0E5"/>
+  <rect x="911" y="570" width="80" height="6" rx="3" fill="#D0E0E5"/>
+</svg>
